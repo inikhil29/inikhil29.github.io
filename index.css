@@ -1,0 +1,74 @@
+body{
+	font-family: monospace;
+	background-color: #098086bd;;
+}
+.container{
+	border: 2px solid black;
+	border-radius: 5px;
+	max-width: 420px;
+	margin: 5% auto 10px;
+	padding: 20px 10px;
+	background-color: #8ba25d9e;
+}
+.opt-container{
+	width: fit-content;
+	margin: auto;
+}
+.selecter{
+	display: inline-flex;
+	font-size: 19px;
+	margin: 5px 5px 10px 5px;
+	margin: auto;
+}
+.option{
+	padding: 5px;
+}
+.inputtaker{
+	text-align: center;
+	margin-top: 20px;
+	font-size: 16px;
+	font-family: monospace;
+}
+input[type="radio"]{
+	margin: 0px;
+}
+input[type="text"]{
+	padding: 5px 10px;
+	border-radius:2px;
+	border: 1px solid black;
+}
+.submit-btn{
+	margin: auto;
+	width: fit-content;
+	margin-bottom: 8px;
+	margin-top: 5px;
+}
+input[type="submit"]{
+	padding: 7px 9px;
+	border-radius: 5px;
+	background-color: black;
+	color: white;
+	font-size: 15px;
+	font-family: monospace;
+	cursor: pointer;
+	outline: none;
+}
+.resultbox{
+	width: fit-content;
+	margin: auto;
+	
+}
+td{
+	padding: 10px 10px;
+}
+span{
+	display: block;
+	color: red;
+	font-size: 15px;
+	font-family: serif;
+	margin: 3px 2px;
+}
+h1{
+	text-align: center;
+	margin-top: 5%;
+}

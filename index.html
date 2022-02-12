@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Triangle Area</title>
+	<meta charset="utf-8">
+	<meta name="auther" content="Nikhil">
+	<meta name="description" content="Area of Triangle">
+	<script type="text/javascript" src="index.js"></script>
+	<link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body>
+	<h1>Area Of Triangle</h1>
+	<div class="container">
+		<div class="opt-container">
+			<div class="selecter">
+				<div class="option">
+					<input type="radio" name="triangle" id="equilateral" value="equilateral" onclick="change(this.id)">
+					<label for="equilateral">Equilateral</label>
+				</div>
+				<div class="option">
+					<input type="radio" name="triangle" id="isosceles" value="isosceles" onclick="change(this.id)">
+					<label for="isosceles">Isosceles</label>
+				</div>
+				<div class="option">
+					<input type="radio" name="triangle" id="scalene" value="scalene" onclick="change(this.id)" checked>
+					<label for="scalene">Scalene</label>
+				</div>	
+			</div>
+		</div>
+
+		<div class="inputtaker">
+			<div class="inpfield">
+				<div class="inpline">
+					<label for="a" id="la">Side a = </label><input type="text" name="sidea" id="a" size="5">
+				</div>
+				<span id="aerr">&nbsp</span>
+			</div>
+			<div class="inpfield">
+				<div class="inpline">
+					<label for="b" id="lb">Side b = </label><input type="text" name="sideb" id="b" size="5">
+				</div>
+				<span id="berr">&nbsp</span>
+			</div>
+			<div class="inpfield">
+				<div class="inpline">
+					<label for="c" id="lc">Side c = </label><input type="text" name="sidec" id="c" size="5">
+				</div>
+				<span id="cerr">&nbsp</span>
+			</div>
+		</div>
+			<div class="submit-btn">
+				<input type="submit" name="submit" value="Calculate" id="submit" onclick="validation(document.querySelector('input[name=triangle]:checked').value)">
+			</div>
+		
+		<div class="resultbox">
+			<table class="result">
+				<tr>
+					<td><label for="perimeter">Perimeter </label></td>
+					<td> = </td>
+					<td><input type="text" name="perimeter" id="perimeter" size="6" readonly></td>
+				</tr>
+				<tr>
+					<td><label for="area">Area </label></td>
+					<td> = </td>
+					<td><input type="text" name="area" id="area" size="6" readonly></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+
+
+	<script type="text/javascript">
+		function change(value){
+			console.log("Received : "+value)
+			document.getElementById('aerr').innerHTML = "&nbsp";
+			document.getElementById('berr').innerHTML = "&nbsp";
+			document.getElementById('cerr').innerHTML = "&nbsp";
+			document.getElementById('a').value = "";
+			document.getElementById('b').value = "";
+			document.getElementById('c').value = "";
+			if(value == "equilateral"){
+				document.getElementById('b').type = 'hidden';
+				document.getElementById('c').type = 'hidden';
+				document.getElementById('lc').style.visibility = 'hidden';
+				document.getElementById('lb').style.visibility = 'hidden';
+			}
+			else if(value == 'isosceles'){
+				document.getElementById('c').type = 'hidden';
+				document.getElementById('lc').style.visibility = 'hidden';
+				document.getElementById('b').type = 'text';
+				document.getElementById('lb').style.visibility = 'visible';
+			}
+			else{
+				document.getElementById('b').type = 'text';
+				document.getElementById('c').type = 'text';
+				document.getElementById('lb').style.visibility = 'visible';
+				document.getElementById('lc').style.visibility = 'visible';
+			}
+		}
+
+		function calculate(val){
+			let obj;
+			if(val == "equilateral"){
+				let a = document.getElementById('a').value;
+				console.log("Value Received "+a)
+				obj = new Equilateral(a);
+			}
+			else if(val == "isosceles"){
+				let a = document.getElementById('a').value;
+				let b = document.getElementById('b').value;
+				console.log("Value Received "+a+", "+b)
+				obj = new Isosceles(a,b);	
+			}
+			else{
+				let a = document.getElementById('a').value;
+				let b = document.getElementById('b').value;
+				let c = document.getElementById('c').value;
+				console.log("Value Received "+a+", "+b+", "+c);
+				obj = new Scalene(a,b,c);
+			}
+			let perimeter = obj.perimeter();
+			let area = obj.area();
+			console.log("Perimeter is "+perimeter+" Area is "+area);
+			document.getElementById('perimeter').value = perimeter.toFixed(3);
+			document.getElementById('area').value = area.toFixed(3);
+		}
+
+		//Validation Part
+
+		function validation(value){
+			
+			if(value == "equilateral"){
+				if(checkA()){
+					calculate("equilateral");
+				}
+			}
+			else if(value == "isosceles"){
+				let chA = checkA();
+				let chB = checkB();
+				if(chA && chB){
+					calculate("isosceles");
+				}
+			}
+			else{
+				let chA = checkA();
+				let chB = checkB();
+				let chC = checkC()
+				if(chA && chB && chC){
+					calculate("scalene");
+				}
+			}
+				
+		}
+
+		//Checking Input Fields
+
+		function checkA(){
+			const errmsg_empty = "* Input Field can't be empty";
+			const errmsg_NaN = "* Entered data is not a number";
+			const errmsg_Neg = "* You can't enter negative number";
+			let a = document.getElementById('a').value;
+			let ele = document.getElementById('aerr')
+			ele.innerHTML = "&nbsp";
+			if(a == ""){
+				ele.innerText = errmsg_empty;
+				return false;
+			}
+			else if(isNaN(a)){
+				ele.innerText = errmsg_NaN;
+				return false;
+			}
+			else if(a < 0){
+				ele.innerText = errmsg_Neg;
+				return false;
+			}
+			return true
+		}
+
+		function checkB(){
+			const errmsg_empty = "* Input Field can't be empty";
+			const errmsg_NaN = "* Entered data is not a number";
+			const errmsg_Neg = "* You can't enter negative number";
+			let b = document.getElementById('b').value;
+			let ele = document.getElementById('berr')
+			ele.innerHTML = "&nbsp";
+			if(b == ""){
+				ele.innerText = errmsg_empty;
+				return false;
+			}
+			else if(isNaN(b)){
+				ele.innerText = errmsg_NaN;
+				return false;
+			}
+			else if(b < 0){
+				ele.innerText = errmsg_Neg;
+				return false;
+			}
+			return true
+		}
+
+		function checkC(){
+			const errmsg_empty = "* Input Field can't be empty";
+			const errmsg_NaN = "* Entered data is not a number";
+			const errmsg_Neg = "* You can't enter negative number";
+			let c = document.getElementById('c').value;
+			let ele = document.getElementById('cerr')
+			ele.innerHTML = "&nbsp";
+			if(c == ""){
+				ele.innerText = errmsg_empty;
+				return false;
+			}
+			else if(isNaN(c)){
+				ele.innerText = errmsg_NaN;
+				return false;
+			}
+			else if(c < 0){
+				ele.innerText = errmsg_Neg;
+				return false;
+			}
+			return true
+		}
+
+	</script>
+</body>
+</html>
